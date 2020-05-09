@@ -6,8 +6,18 @@ CONTENTS                                                 *float_timer-contents*
 ==============================================================================
 Introduction                               *float_timer* *float_timer-introduction*
 
+float_timer is timer. Show result as floating window.
+
 ==============================================================================
 Usage                                                        *float_timer-usage*
+
+Example:
+>
+    FloatTimer <minutes>
+<
+
+When run `FloatTimer 1`, program wait 1 minutes. After 1 minutes, show result
+in floating window.
 
 ==============================================================================
 Requirements                                          *float_timer-requirements*

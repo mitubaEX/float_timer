@@ -1,15 +1,9 @@
 " themis spec
 "
-" let s:suite = themis#suite('float_timer')
-" let s:assert = themis#helper('assert')
-"
-" function! s:suite.success_test()
-"   call s:assert.equals(3, 3)
-" endfunction
+let s:suite = themis#suite('float_timer')
+let s:assert = themis#helper('assert')
 
-" vspec spec
-describe 'example test'
-  it '1 + 1 = 2'
-    Expect 1 + 1 == 2
-  end
-end
+function! s:suite.minutes2ms()
+  let actual = float_timer#minutes2ms(5)
+  call s:assert.equals(actual, 300000)
+endfunction

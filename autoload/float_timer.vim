@@ -3,9 +3,14 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:Promise = vital#vital#new().import('Async.Promise')
+let s:Promise = vital#float_timer#new().import('Async.Promise')
 
-function! float_timer#show_time(ms) abort
+function! float_timer#minutes2ms(minutes) abort
+  return a:minutes * 60 * 1000
+endfunction
+
+" show result floating window
+function! float_timer#show_time(minutes) abort
   let width = 40
   let height = 4
   let top = ((&lines - height) / 2) - 1
@@ -21,7 +26,7 @@ function! float_timer#show_time(ms) abort
   let bot = "╰" . repeat("─", width - 2) . "╯"
   let lines = [top] + repeat([mid], height - 2) + [bot]
 
-  let content_str = ["│" . repeat(" ", 10 - len(string(a:ms))) . string(a:ms) . ' minutes has passed!' . repeat(" ", 8) . "│"]
+  let content_str = ["│" . repeat(" ", 10 - len(string(a:minutes))) . string(a:minutes) . ' minutes has passed!' . repeat(" ", 8) . "│"]
         \+ ["│" . repeat(" ", 12) . 'press [q] key' . repeat(" ", 13) . "│"]
 
   call nvim_buf_set_lines(buf, 0, -1, v:true, [top] + content_str + [bot])
@@ -38,12 +43,15 @@ function! float_timer#show_time(ms) abort
   endwhile
 endfunction
 
+" wait ms
 function! s:wait(ms)
   return s:Promise.new({resolve -> timer_start(a:ms, resolve)})
 endfunction
 
-function! float_timer#main(ms) abort
-  call s:wait(a:ms).then({-> float_timer#show_time(a:ms)})
+" main
+function! float_timer#main(minutes) abort
+  let ms = float_timer#minutes2ms(a:minutes)
+  call s:wait(ms).then({-> float_timer#show_time(a:minutes)})
 endfunction
 
 let &cpo = s:save_cpo

@@ -1,6 +1,6 @@
 .PHONY: setup test
 
-all: setup test-vspec
+all: setup test-themis
 
 setup:
 	git clone https://github.com/thinca/vim-themis.git

@@ -26,7 +26,7 @@ function! float_timer#show_time(minutes) abort
   let bot = "╰" . repeat("─", width - 2) . "╯"
   let lines = [top] + repeat([mid], height - 2) + [bot]
 
-  let content_str = ["│" . repeat(" ", 10 - len(string(a:minutes))) . string(a:minutes) . ' minutes has passed!' . repeat(" ", 8) . "│"]
+  let content_str = ["│" . repeat(" ", 12 - len(string(a:minutes))) . a:minutes . ' minutes has passed!' . repeat(" ", 8) . "│"]
         \+ ["│" . repeat(" ", 12) . 'press [q] key' . repeat(" ", 13) . "│"]
 
   call nvim_buf_set_lines(buf, 0, -1, v:true, [top] + content_str + [bot])

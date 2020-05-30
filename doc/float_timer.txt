@@ -25,6 +25,13 @@ Requirements                                          *float_timer-requirements*
 ==============================================================================
 Configuration                                        *float_timer-configuration*
 
+------------------------------------------------------------------------------
+                                       *float_timer-disable_float_timer_window*
+
+Disable floating window.
+>
+    let g:disable_float_timer_window = 1
+
 ==============================================================================
 License                                                    *float_timer-license*
 

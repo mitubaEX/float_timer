@@ -11,6 +11,22 @@ endfunction
 
 " show result floating window
 function! float_timer#show_time(minutes) abort
+
+  if exists('g:disable_float_timer_window') && g:disable_float_timer_window == 1
+    echo a:minutes . ' minutes has passed! press [q] key.'
+
+    " wait press key
+    while 1
+      " break when press q
+      let key = getchar(0)
+      if key ==# 113
+        break
+      endif
+    endwhile
+
+    return
+  endif
+
   let width = 40
   let height = 4
   let top = ((&lines - height) / 2) - 1
@@ -21,13 +37,13 @@ function! float_timer#show_time(minutes) abort
         \ 'row': top, 'anchor': 'NW', 'style': 'minimal'}
   let win = nvim_open_win(buf, 0, opts)
 
-  let top = "╭" . repeat("─", width - 2) . "╮"
-  let mid = "│" . repeat(" ", width - 2) . "│"
-  let bot = "╰" . repeat("─", width - 2) . "╯"
+  let top = '╭' . repeat('─', width - 2) . '╮'
+  let mid = '│' . repeat(' ', width - 2) . '│'
+  let bot = '╰' . repeat('─', width - 2) . '╯'
   let lines = [top] + repeat([mid], height - 2) + [bot]
 
-  let content_str = ["│" . repeat(" ", 12 - len(string(a:minutes))) . a:minutes . ' minutes has passed!' . repeat(" ", 8) . "│"]
-        \+ ["│" . repeat(" ", 12) . 'press [q] key' . repeat(" ", 13) . "│"]
+  let content_str = ['│' . repeat(' ', 12 - len(string(a:minutes))) . a:minutes . ' minutes has passed!' . repeat(' ', 8) . '│']
+        \+ ['│' . repeat(' ', 12) . 'press [q] key' . repeat(' ', 13) . '│']
 
   call nvim_buf_set_lines(buf, 0, -1, v:true, [top] + content_str + [bot])
   redraw!
